@@ -1,0 +1,74 @@
+@use '@angular/material' as mat;
+
+/* ===== Tema (API nueva v17/M3) ===== */
+$theme: mat.define-theme((
+  color: ( theme-type: light, primary: mat.$blue-palette, tertiary: mat.$blue-palette ),
+  density: ( scale: -2 ),
+  typography: (
+    // ✅ Sin la comilla extra al final
+    brand-family: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif',
+    bold-weight: 700
+  )
+));
+
+@include mat.core();
+@include mat.all-component-themes($theme);
+/* (Opcional) Aplica jerarquía h1..h6 usando el tema */
+@include mat.typography-hierarchy($theme);
+
+/* ====== TOKENS GLOBALES ====== */
+html {
+  --bg      : #f5f7fb;
+  --surface : #ffffff;
+  --border  : #e6eaf2;
+  --text    : #0f172a;
+  --muted   : #64748b;
+  --radius  : 14px;
+  --shadow  : 0 6px 24px rgba(2, 12, 27, .08);
+  --hover   : #f2f6fc;
+}
+
+/* ✅ Aquí (GLOBAL) sí pega el font-family */
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+               "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+}
+
+/* ====== LAYOUT / UTILS ====== */
+.container { max-width: 1120px; margin: 32px auto; padding: 0 16px; }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.panel-header { padding: 16px 20px; font-weight: 600; }
+.panel-body   { padding: 12px 20px 20px; }
+
+.section-title {
+  margin: 0 0 12px 0;
+  font-weight: 700; font-size: 1.1rem; letter-spacing: .02em;
+}
+
+.table-clean {
+  width: 100%;
+  border-collapse: collapse;
+  th, td { padding: 14px 16px; border-top: 1px solid var(--border); }
+  th { text-align: left; color: var(--muted); font-weight: 600; font-size: .8rem; }
+  tr:hover td { background: var(--hover); }
+}
+
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 999px;
+  font-weight: 600; font-size: .8rem;
+  &--ok    { background: #e6f7ef; color: #0f9d58; }
+  &--muted { background: #eef2f7; color: #475569; }
+}
+
+.actions { display:flex; gap: 8px; align-items: center; }
+.mat-mdc-button-base { border-radius: 10px; }

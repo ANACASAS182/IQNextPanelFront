@@ -1,0 +1,20 @@
+:host { display:block; }
+.panel + .panel { margin-top: 20px; }
+
+.mat-mdc-form-field { max-width: 720px; width: 100%; }
+
+@media (max-width: 720px) {
+  .mat-mdc-form-field { max-width: 100%; }
+}
+
+.ml-6 { margin-left: 6px; }
+.text-error { color:#c62828; margin-top:8px; }
+.text-muted { color: var(--muted); }
+
+.header-flex { display:flex; justify-content:space-between; align-items:center; }
+.panel-title { font-weight: 700; }
+
+:focus-visible {
+  outline: 3px solid rgba(59,130,246,.45);
+  outline-offset: 2px;
+}
