@@ -1,0 +1,73 @@
+<div class="container">
+  <h1 class="section-title">Automatizaciones • Iqnext</h1>
+
+  <!-- Lista de procesos -->
+  <div class="panel">
+    <div class="panel-header">Procesos</div>
+    <div class="panel-body">
+      <table class="table-clean" *ngIf="visibleProcesos.length; else noProcs">
+        <thead>
+          <tr>
+            <th>Proceso</th>
+            <th>Última ejecución</th>
+            <th style="width:210px;">Totales</th>
+            <th style="width:120px;"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let p of visibleProcesos; trackBy: trackById">
+            <td>{{ p.nombre }}</td>
+            <td>{{ p.ultima ? (p.ultima | date:'short') : '—' }}</td>
+            <td>
+              <span class="badge badge--ok">✓ {{ p.total1 }}</span>
+              <span class="badge badge--muted ml-6">⏳ {{ p.total0 }}</span>
+            </td>
+            <td class="actions">
+              <button mat-stroked-button color="primary" (click)="verDetalle(p)">
+                Ver detalle
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noProcs>
+        <div class="text-muted">No hay procesos para mostrar.</div>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Detalle -->
+  <div *ngIf="selectedProceso" class="panel">
+    <div class="panel-header header-flex">
+      <span class="panel-title">{{ selectedProceso?.nombre }}</span>
+      <button mat-button color="primary" (click)="limpiarDetalle()">Ocultar</button>
+    </div>
+
+    <div class="panel-body">
+      <table class="table-clean" *ngIf="ejecuciones?.length; else noExec">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Estatus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of ejecuciones">
+            <td>{{ e.fechaHora | date:'medium' }}</td>
+            <td>
+              <span class="badge" [ngClass]="e.estatus === 1 ? 'badge--ok' : 'badge--muted'">
+                {{ e.estatus === 1 ? 'Concluida' : 'No concluida' }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noExec>
+        <div class="text-muted">Aún no hay ejecuciones para este proceso.</div>
+      </ng-template>
+    </div>
+  </div>
+</div>

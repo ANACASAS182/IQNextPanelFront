@@ -1,0 +1,52 @@
+<div class="perfil-wrap">
+  <h1>Perfil</h1>
+
+  <div class="card">
+    <div class="row">
+      <span class="lbl">Nombre</span>
+      <span class="val">{{ user.nombre || '—' }}</span>
+    </div>
+    <div class="row">
+      <span class="lbl">Correo</span>
+      <span class="val">{{ user.correo || '—' }}</span>
+    </div>
+    <div class="row">
+      <span class="lbl">Empresa</span>
+      <span class="val">{{ user.empresaNombre || '—' }}</span>
+    </div>
+  </div>
+
+  <h2 class="mt-24">Cambiar contraseña</h2>
+
+  <form class="card form" [formGroup]="form" (ngSubmit)="cambiarPassword()">
+    <div class="field">
+      <label>Contraseña actual</label>
+      <input type="password" formControlName="passwordActual" autocomplete="current-password" />
+      <small class="error" *ngIf="f['passwordActual'].touched && f['passwordActual'].invalid">Requerida</small>
+    </div>
+
+    <div class="field">
+      <label>Nueva contraseña</label>
+      <input type="password" formControlName="passwordNueva" autocomplete="new-password" />
+      <small class="error" *ngIf="f['passwordNueva'].touched && f['passwordNueva'].hasError('minlength')">
+        Mínimo 6 caracteres
+      </small>
+      <small class="error" *ngIf="f['passwordNueva'].touched && f['passwordNueva'].hasError('required')">
+        Requerida
+      </small>
+    </div>
+
+    <div class="field">
+      <label>Confirmar nueva contraseña</label>
+      <input type="password" formControlName="passwordNueva2" autocomplete="new-password" />
+      <small class="error" *ngIf="form.touched && form.hasError('mismatch')">Las contraseñas no coinciden</small>
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="loading || form.invalid">Guardar</button>
+    </div>
+
+    <div class="msg ok" *ngIf="okMsg">{{ okMsg }}</div>
+    <div class="msg err" *ngIf="errMsg">{{ errMsg }}</div>
+  </form>
+</div>

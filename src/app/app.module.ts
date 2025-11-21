@@ -19,7 +19,7 @@ import { AppRoutingModule } from './app-routing-module';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpClientModule,      // 👈 **necesario**
