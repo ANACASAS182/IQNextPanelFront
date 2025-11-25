@@ -6,10 +6,11 @@ export interface Proceso {
 
 export interface LoginResponse {
   exito: boolean;
-  mensaje: string;
-  usuarioId: number | null;
-  empresaId: number | null;
-  empresaNombre: string | null;
-  nombre: string | null;
-  correo: string | null;
+  mensaje?: string;
+  usuarioId?: number;
+  empresaId?: number;
+  empresaNombre?: string;
+  nombre?: string;
+  correo?: string;
+  esAdmin?: boolean; // 👈 NUEVO
 }

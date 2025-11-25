@@ -1,4 +1,7 @@
 export const environment = {
-  production: false,
-  apiBaseUrl: 'https://localhost:7170' // AJUSTA el puerto de tu API
+  production: true,
+  // apiBaseUrl: 'https://localhost:7170'
+  
+   apiBaseUrl: 'https://api.iqnext.ai'
+
 };

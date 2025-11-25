@@ -1,17 +1,25 @@
 <div class="container">
   <h1 class="section-title">Automatizaciones • Iqnext</h1>
 
-  <!-- Lista de procesos -->
   <div class="panel">
-    <div class="panel-header">Procesos</div>
+    <div class="panel-header header-flex">
+      <span>Procesos</span>
+
+      <button *ngIf="isAdmin"
+              class="btn-stroked accent"
+              (click)="agregarProceso()">
+        + Agregar proceso
+      </button>
+    </div>
+
     <div class="panel-body">
       <table class="table-clean" *ngIf="visibleProcesos.length; else noProcs">
         <thead>
           <tr>
             <th>Proceso</th>
             <th>Última ejecución</th>
-            <th style="width:210px;">Totales</th>
-            <th style="width:120px;"></th>
+            <th style="width:140px;">Totales</th>
+            <th style="width:180px;"></th>
           </tr>
         </thead>
 
@@ -21,12 +29,11 @@
             <td>{{ p.ultima ? (p.ultima | date:'short') : '—' }}</td>
             <td>
               <span class="badge badge--ok">✓ {{ p.total1 }}</span>
-              <span class="badge badge--muted ml-6">⏳ {{ p.total0 }}</span>
+              <!-- ❌ Eliminado el contador de estatus 0 -->
             </td>
             <td class="actions">
-              <button mat-stroked-button color="primary" (click)="verDetalle(p)">
-                Ver detalle
-              </button>
+              <button class="btn-stroked" (click)="verDetalle(p)">Ver detalle</button>
+              <button class="btn-stroked ml-6" (click)="abrirApi(p)">API</button>
             </td>
           </tr>
         </tbody>
@@ -42,16 +49,13 @@
   <div *ngIf="selectedProceso" class="panel">
     <div class="panel-header header-flex">
       <span class="panel-title">{{ selectedProceso?.nombre }}</span>
-      <button mat-button color="primary" (click)="limpiarDetalle()">Ocultar</button>
+      <button class="btn-link" (click)="limpiarDetalle()">Ocultar</button>
     </div>
 
     <div class="panel-body">
       <table class="table-clean" *ngIf="ejecuciones?.length; else noExec">
         <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Estatus</th>
-          </tr>
+          <tr><th>Fecha</th><th>Estatus</th></tr>
         </thead>
         <tbody>
           <tr *ngFor="let e of ejecuciones">
@@ -64,10 +68,56 @@
           </tr>
         </tbody>
       </table>
-
       <ng-template #noExec>
         <div class="text-muted">Aún no hay ejecuciones para este proceso.</div>
       </ng-template>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Crear Proceso (sin cambios visuales) -->
+<div class="modal-backdrop" *ngIf="showCrear">
+  <div class="modal modal--white">
+    <h3>Nuevo proceso</h3>
+
+    <label>Nombre del proceso</label>
+    <input type="text" maxlength="100" [(ngModel)]="crearNombre" [disabled]="crearLoading" />
+
+    <p class="error" *ngIf="crearError">{{ crearError }}</p>
+
+    <div class="modal-actions">
+      <button class="btn-stroked" (click)="cancelarCrear()" [disabled]="crearLoading">Cancelar</button>
+      <button class="btn-primary" (click)="guardarCrear()" [disabled]="crearLoading">
+        {{ crearLoading ? 'Guardando...' : 'Guardar' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal API (solo cURL de estatus 1) -->
+<div class="modal-backdrop" *ngIf="showApi">
+  <div class="modal modal--white">
+    <h3>CURL — {{ apiProcesoNombre }}</h3>
+
+    <div *ngIf="apiLoading" class="text-muted">Generando cURL…</div>
+    <div *ngIf="apiError" class="error">{{ apiError }}</div>
+
+    <ng-container *ngIf="!apiLoading && !apiError">
+      <label class="code-title">Concluida (estatus 1)</label>
+      <div class="code-row">
+        <textarea class="code" readonly [value]="apiCurl1"></textarea>
+        <button class="btn-stroked" (click)="copiar(apiCurl1)">Copiar</button>
+      </div>
+      <!-- ❌ Se eliminó por completo el bloque de “No concluida (estatus 0)” -->
+    </ng-container>
+
+    <div class="modal-actions mt-12">
+      <button class="btn-primary" (click)="cerrarApi()">Cerrar</button>
+    </div>
+
+    <!-- Toast de copiado -->
+    <div class="toast" *ngIf="toastVisible" role="status" aria-live="polite">
+      {{ toastMsg }}
     </div>
   </div>
 </div>

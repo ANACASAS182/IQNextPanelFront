@@ -18,3 +18,186 @@
   outline: 3px solid rgba(59,130,246,.45);
   outline-offset: 2px;
 }
+/* ==== Backdrop (oscurece fondo) ==== */
+.modal-backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  display: grid;
+  place-items: center;
+  z-index: 50;
+}
+
+/* ==== Modal blanco y contenido que no se desborda ==== */
+.modal{
+  background: #ffffff;          /* <- blanco */
+  color: #111827;               /* texto oscuro */
+  width: calc(100% - 32px);     /* respeta bordes en pantallas pequeñas */
+  max-width: 420px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.20);
+  box-sizing: border-box;       /* evita “crecerse” por padding/border */
+}
+
+.modal h3{
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.modal label{
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+/* ==== Input 100% ancho, sin sobresalir, con estilos claros ==== */
+.modal input{
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;       /* clave para no salirse */
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;   /* gris claro */
+  background: #ffffff;         /* blanco */
+  color: #111827;
+  outline: none;
+}
+
+.modal input:focus{
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15); /* focus ring */
+}
+
+/* ==== Footer del modal ==== */
+.modal-actions{
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+/* ==== Botones (tema claro dentro del modal) ==== */
+.btn-stroked{
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #111827;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-stroked:hover{
+  background: #f8fafc;
+}
+
+.btn-link{
+  background: transparent;
+  border: 0;
+  color: #2563eb;
+  cursor: pointer;
+}
+
+.btn-primary{
+  background: #2563eb;
+  color: #ffffff;
+  border: 0;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-primary[disabled],
+.btn-stroked[disabled]{
+  opacity: .6;
+  pointer-events: none;
+}
+
+/* Variante acento del botón “Agregar proceso” en el header */
+.accent.btn-stroked{
+  border-color: #22c55e;
+  color: #16a34a;
+}
+
+.error{
+  color: #dc2626;
+  margin-top: 8px;
+}
+.modal-backdrop{
+  position: fixed; inset: 0; background: rgba(0,0,0,.35);
+  display: grid; place-items: center; z-index: 50;
+}
+.modal{
+  width: 100%; max-width: 640px; padding: 20px; border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+.modal--white{
+  background: #fff; color: #111827;  /* 👈 blanco */
+}
+.modal h3{ margin: 0 0 12px; }
+.modal input{
+  width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #d1d5db;
+  background: #fff; color: #111827;  /* 👈 input blanco */
+}
+.modal-actions{ display:flex; gap:10px; justify-content: flex-end; margin-top: 14px; }
+
+/* Botones */
+.btn-stroked{ border:1px solid #64748b; background: transparent; color:#1f2937; padding:6px 12px; border-radius:8px; }
+.btn-link{ background: transparent; border:0; color:#2563eb; cursor:pointer; }
+.btn-primary{ background:#2563eb; color:white; border:0; padding:8px 14px; border-radius:8px; }
+.accent.btn-stroked{ border-color:#22c55e; color:#16a34a; }
+
+.error{ color:#dc2626; margin-top:8px; }
+.text-muted{ color:#6b7280; }
+
+/* cURL blocks */
+.code-title{ display:block; font-size: .9rem; margin: 10px 0 6px; color:#374151; }
+.code-row{ display:flex; gap:10px; align-items: stretch; }
+.code{
+  flex:1;
+  min-height: 72px;
+  width: 100%;
+  resize: vertical;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: .85rem;
+  line-height: 1.35;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;           /* fondo claro */
+  color:#111827;
+  box-sizing: border-box;         /* 👈 no se desborda */
+}
+.mt-10{ margin-top: 10px; }
+.mt-12{ margin-top: 12px; }
+.ml-6{ margin-left: 6px; }
+/* Toast dentro del modal */
+.toast {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  padding: 10px 14px;
+  background: #10b981;      /* verde suave */
+  color: #0b211a;           /* contraste alto */
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.18);
+  font-size: 14px;
+  animation: toast-in .16s ease-out, toast-out .25s ease-in 1.95s forwards;
+  pointer-events: none;     /* no captura clics */
+}
+
+@keyframes toast-in {
+  from { transform: translateY(8px); opacity: 0; }
+  to   { transform: translateY(0);  opacity: 1; }
+}
+
+@keyframes toast-out {
+  to { transform: translateY(8px); opacity: 0; }
+}
+
+/* Asegura posicionamiento relativo en el modal para colocar la toast */
+.modal.modal--white {
+  position: relative;
+}
